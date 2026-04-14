@@ -14,6 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    // wrap theme-provider from shadcn ui
     <ClerkProvider appearance={{baseTheme: "dark"}}>
       <html lang="en" suppressHydrationWarning>
         <head>
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
             disableTransitionOnChange
           >
             <Header />
+
             <main className="min-h-screen">{children}</main>
              
              
@@ -34,7 +36,7 @@ export default function RootLayout({ children }) {
 
             <footer className="bg-muted/50 py-12">
               <div className="container mx-auto px-4 text-center text-gray-200">
-                <p>Made by Nishtha & Maanav</p>
+                <p>Made by Nishtha</p>
               </div>
             </footer>
           </ThemeProvider>
