@@ -1,9 +1,13 @@
-import React from 'react'
-
-const IndustryInsights = () => {
-  return (
-    <div>IndustryInsights</div>
-  )
+import {getUserOnboardingStatus} from "../../../actions/user";
+import { redirect } from "next/navigation";
+const IndustryInsightsPage = async () => {
+    const { isOnboarded } = await getUserOnboardingStatus();
+    if (!isOnboarded) {
+        redirect('/onboarding');
+    }
+    return (
+        <div>IndustryInsightsPage</div>
+    )
 }
 
-export default IndustryInsights
+export default IndustryInsightsPage
