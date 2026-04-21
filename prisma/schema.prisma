@@ -109,8 +109,8 @@ enum DemandLevel{
   Low
 }
 
-enum MarketOutlook{
-  High
-  Medium
-  Low
+enum MarketOutlook {
+  Positive
+  Neutral
+  Negative
 }
