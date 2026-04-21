@@ -47,12 +47,24 @@ export async function getIndustryInsights() {
         where: {
             clerkUserId: userId,
         },
-
+        include: {
+            industryInsight: true,
+        },
     });
     if (!user) throw new Error("User not found");
-    if (!user.getIndustryInsights) {
+
+
+
+    if (!user.industry) {
+    throw new Error("User has not completed onboarding");
+  }
+
+
+
+
+    if (!user.industryInsight) {
         const insights = await generateAIInsights(user.industry);
-        const industryInsight = await db.industryInsights.create({
+        const industryInsight = await db.industryInsight.create({
             data: {
                 industry: user.industry,
                 ...insights,
