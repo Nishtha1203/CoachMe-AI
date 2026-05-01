@@ -16,6 +16,7 @@ import { BarLoader } from "react-spinners";
 import { RadioGroup ,RadioGroupItem} from "../../../../components/ui/radio-group";
 import { Label } from "../../../../components/ui/label";
 import { saveQuizResult } from "@/actions/interview";
+import QuizResult from "./quiz-result";
 
 export default function Quiz(){
   const [currentQuestion, setCurrentQuestion] = useState(0);
