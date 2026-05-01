@@ -129,94 +129,17 @@ export async function saveQuizResult(questions, answers, score) {
   }
 }
 
-/*   export async function saveQuizResult(questions, answers, score) {
+export async function getAssessments(){
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
   const user = await db.user.findUnique({
-    where: { clerkUserId: userId },
+    where: { 
+      clerkUserId: userId 
+    },
   });
 
   if (!user) throw new Error("User not found");
-
-  const questionResults = questions.map((q, index) => ({
-    question: q.question,
-    answer: q.correctAnswer,
-    userAnswer: answers[index],
-    isCorrect: q.correctAnswer === answers[index],
-    explanation: q.explanation,
-  }));
-
-  // Get wrong answers
-  const wrongAnswers = questionResults.filter((q) => !q.isCorrect);
-
-  // Default improvement tip
-  let improvementTip =
-    "Great effort! Review the explanations carefully and practice the concepts related to the questions you found difficult.";
-
-  // Only generate improvement tips if there are wrong answers
-  if (wrongAnswers.length > 0) {
-    const wrongQuestionsText = wrongAnswers
-      .map(
-        (q) =>
-          `Question: "${q.question}"\nCorrect Answer: "${q.answer}"\nUser Answer: "${q.userAnswer}"`
-      )
-      .join("\n\n");
-
-    const improvementPrompt = `
-      The user got the following ${user.industry} technical interview questions wrong:
-
-      ${wrongQuestionsText}
-
-      Based on these mistakes, provide a concise, specific improvement tip.
-      Focus on the knowledge gaps revealed by these wrong answers.
-      Keep the response under 2 sentences and make it encouraging.
-      Don't explicitly mention the mistakes, instead focus on what to learn/practice.
-    `;
-
-    try {
-      const tipResult = await model.generateContent(improvementPrompt);
-      improvementTip = tipResult.response.text().trim();
-      console.log(improvementTip);
-    } catch (error) {
-      console.error("Error generating improvement tip:", error);
-
-      improvementTip =
-        "Your quiz result has been saved successfully. Review the explanations for the incorrect answers and revise those concepts before your next attempt.";
-    }
-  } else {
-    improvementTip =
-      "Excellent work! You answered all questions correctly. Continue practicing advanced-level questions to strengthen your interview preparation.";
-  }
-
-  try {
-    const assessment = await db.assessment.create({
-      data: {
-        userId: user.id,
-        quizScore: score,
-        questions: questionResults,
-        category: "Technical",
-        improvementTip,
-      },
-    });
-
-    return assessment;
-  } catch (error) {
-    console.error("Error saving quiz result:", error);
-    throw new Error("Failed to save quiz result");
-  }
-} */
-
-/* export async function getAssessments() {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
-
-  const user = await db.user.findUnique({
-    where: { clerkUserId: userId },
-  });
-
-  if (!user) throw new Error("User not found");
-
   try {
     const assessments = await db.assessment.findMany({
       where: {
@@ -232,4 +155,4 @@ export async function saveQuizResult(questions, answers, score) {
     console.error("Error fetching assessments:", error);
     throw new Error("Failed to fetch assessments");
   }
-}  */
+}
